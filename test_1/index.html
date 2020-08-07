@@ -1,0 +1,225 @@
+<html>
+    <head>
+        <meta charset="utf-8" >
+		
+		<link rel="stylesheet" href="/css/style.css">
+
+         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>  
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>   
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+		<script src="/js/inputMask.js"></script>
+		<style>
+			#app{
+				width: 100%;
+				max-width: 650px;
+				margin: auto;
+			}
+			#app>div{
+				display: flex;
+				margin-top: 20px;
+			}
+			#app>div>p:not(:first-child),#self-data>p:not(:first-child){
+				margin-left: 15px;
+			}
+			#self-data>p{
+				display: grid;
+			}
+			@media(max-width: 650px){
+				h2,#app>p{
+					text-align: center;
+				}
+				#app>div{
+					display: flex;
+					flex-direction: column;
+					text-align: center;
+					margin-top: 20px;
+				}
+			}
+		</style>
+    </head>
+    <body>
+        
+        <form id="app" @submit="checkForm">
+		  <p v-if="errors.length">
+		    <b>Пожалуйста исправьте указанные ошибки:</b>
+		    <ul>
+		      <li v-for="error in errors" style="color:red">{{ error }}</li>
+		    </ul>
+		  </p>
+		  <p v-if="success">
+		    <b style="color:green">Новый клиент успешно создан</b>
+		  </p>
+		  <h2>Личная информация</h2>
+		  <div id="person-data">
+		  	<p>
+			    <label for="lastname">Фамилия</label>
+			    <input
+			      id="lastname"
+			      v-model="lastname"
+			      type="text"
+			      name="lastname"
+			    >
+			</p>
+			<p>
+			    <label for="name">Имя</label>
+			    <input
+			      id="name"
+			      v-model="name"
+			      type="text"
+			      name="name"
+			    >
+			</p>
+			<p>
+			    <label for="middlename">Отчество</label>
+			    <input type="text" name="middlename">
+			</p>
+		  </div>
+		  <div id="self-info">
+		  	<p>
+			    <label>Дата рождения</label>
+			    <input type="text" id="age" v-model="age">
+			</p>
+			<p>
+			    <label>Номер телефона</label>
+			    <input-mask v-model="phone" mask="+7(###)###-##-##" class="input"></input-mask>
+			</p>
+
+			<div id="sex">
+			    <label>Пол</label>
+			    <div id="sex-checkbox">
+			    	<span>Мужской<input type="checkbox" value="Мужской" name="Мужской"  ></span>
+			    	<span>Женский<input type="checkbox" value="Женский" name="Женский"  >	</span>
+			    </div>			    	    
+			</div>
+		  </div>	
+		  <div id="self-data">
+		  	<p>
+			    <label>Группа клиентов</label>
+			    <select multiple size="3" id="userGroup" v-model="userGroup" type="text" name="userGroup">
+			      <option>VIP</option>
+			      <option>Проблемные</option>
+			      <option>ОМС</option>
+			    </select>
+			</p>
+
+		   <p>
+			    <label>Лечащий врач</label>
+			    <select size="1">
+			      <option>Иванов</option>
+			      <option>Захаров</option>
+			      <option>Чернышев</option>
+			    </select>
+		   </p>
+		  </div>	
+		  <h2>Адрес</h2>
+		  <div id="delivery-city-data">
+		  	<p>
+			    <label for="country">Страна</label>
+			    <input
+			      id="country"
+			      type="text"
+			      name="country"
+			    >
+			</p>
+			<p>
+			    <label for="place">Область</label>
+			    <input
+			      id="place"
+			      type="text"
+			      name="place"
+			    >
+			</p>
+			<p>
+			    <label for="city">Город</label>
+			    <input
+			      id="city"
+			      v-model="city"
+			      type="text"
+			      name="city"
+			    >
+			</p>			
+		  </div>	
+		  <div id="delivery-data">
+		  	<p>
+			    <label for="street">Улица</label>
+			    <input
+			      id="street"
+			      type="text"
+			      name="street"
+			    >
+			</p>
+			<p>
+			    <label for="house">Дом</label>
+			    <input
+			      id="house"
+			      type="text"
+			      name="house"
+			    >
+			</p>
+			<p>
+			    <label for="index">Индекс</label>
+			    <input
+			      id="index"
+			      type="text"
+			      name="index"
+			    >
+			</p>
+		  </div>	
+		  <h2>Паспорт</h2>  
+		  <div id="ausvice">
+		  	<p>
+			    <label>Тип документа</label>
+			    <select size="1" id="document"
+			      v-model="document"
+			      type="text"
+			      name="document">
+			      <option>Паспорт</option>
+			      <option>Свидетельство о рождении</option>
+			      <option>Вод. Удостоверение</option>
+			    </select>
+		   </p>
+		   <p>
+			    <label>Серия</label>
+			    <input type="text" id="ausvice-series" name="ausvice-series" >
+			</p>
+			<p>
+			    <label>Номер</label>
+			    <input type="text" id="ausvice-number" name="ausvice-number">
+			</p>
+		  </div>
+		  <div id="ausvice-data">
+		  	<p>
+			    <label>Кем выдан</label>
+			    <input type="text" id="ausvice-by" name="ausvice-by" >
+			</p>
+			<p>
+			    <label>Дата выдачи</label>
+			    <input type="text" id="ausviceDate" name="ausviceDate" v-model="ausviceDate">
+			</p>
+		  </div>
+			  <p id="sms">
+			    <label>Не отправлять смс</label>
+			    <input type="checkbox" value="смс" name="смс"  >
+			  </p>
+
+			  <p>
+			    <input type="submit" value="Отправить">
+			  </p>
+
+		</form>		
+        <script src="/js/main.js"></script>
+        <script>
+			$(function(){
+				$("#age").datepicker();
+				$('#ausviceDate').datepicker();
+
+				$('#sex>input').change(function(){
+					for( let i = 0; i < $('#sex>input').length; i++) $('#sex>input')[i].checked = false;
+				    $(this).prop('checked', true);
+				});
+			});
+		</script>
+    </body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#game {
+		    background: #fff;
+		    position: relative;
+		    float: left;
+		    margin-right: 3em;
+		    width: 302px;
+		    height: 295px;
+		    -webkit-border-radius: 150px 150px 150px 150px;
+		    border-radius: 150px 150px 150px 150px;
+		    -moz-box-shadow: 2px 1px 12px #aaa;
+		    -webkit-box-shadow: 2px 1px 12px #aaa;
+		    -o-box-shadow: 2px 1px 12px #aaa;
+		    box-shadow: 2px 1px 12px #aaa;
+		}
+		#game>ul{
+			margin: 0;
+    		padding: 0;
+		}
+		.red {
+		    background: #FF5643;
+		    clip: rect(0px, 300px, 150px, 150px);
+		    width: 296px;
+		}
+		.blue {
+		    background: dodgerblue;
+		    clip: rect(0px, 150px, 150px, 0px);
+		    width: 300px;
+		}
+		.yellow {
+		    background: #FEEF33;
+		    clip: rect(150px, 150px, 300px, 0px);
+		    width: 300px;
+		}
+		.green {
+		    background: #BEDE15;
+		    clip: rect(150px,300px, 300px, 150px);
+		    width: 296px;
+		}
+		.red, .blue, .yellow, .green {
+		    opacity: 0.6;
+		    height: 290px;
+		    -webkit-border-radius: 150px 150px 150px 150px;
+		    border-radius: 150px 150px 150px 150px;
+		    position: absolute;
+		    text-indent: 10000px;
+		}
+		.hoverable:hover {
+		    cursor: pointer;
+		}
+		.red:hover, .blue:hover, .yellow:hover, .green:hover {
+		    border: 2px solid black!important;
+		}
+	</style>
+
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+</head>
+<body>
+
+	<div id="game">
+		<ul>
+			<li class="red hoverable" data-tile="1"></li>
+			<li class="blue hoverable" data-tile="2"></li>
+			<li class="yellow hoverable" data-tile="3"></li>
+			<li class="green hoverable" data-tile="4"></li>
+		</ul>
+	</div>
+	<div class="game-info">
+		<h2>Round: <span data-round="0">7</span></h2>
+		<button data-action="start" id="start">Начать</button>
+		<p data-action="lose" style="display: none;">Игра завершилась на раунде <span data-round="0">7</span> rounds!</p>
+	</div>
+	<div class="game-options">
+		<h2>Game Options:</h2>
+		<input type="radio" name="mode" value="easy" checked="">Легкий<br>
+		<input type="radio" name="mode" value="normal">Средний<br>
+		<input type="radio" name="mode" value="hard">Сложный<br>
+	</div>
+	
+	<script src="/js/game.js"></script>
+</body>
+</html>
